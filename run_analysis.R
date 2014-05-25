@@ -45,11 +45,15 @@ cnames <- c(cnames[grep("(mean|std)", perl=TRUE, cnames)], "ActivityCode", "Subj
 data <- data[,cnames] # only retaining columns containing mean and std in their names
 
 #capturing only average values of each variable for each activity and each subject
+# tidyData :: second data that is asked for
 tidyData <- aggregate(data, by=list(data$ActivityCode, data$SubjectId), FUN=mean)
 tidyData$Group.1 <- NULL
 tidyData$Group.2 <- NULL
 #attaching ActivityName as another column for reading purposes
 tidyData <- merge(tidyData, activityLabels, by.x = "ActivityCode", by.y="ActivityCode") # merging activity map and train map
+write.table(tidyData, "./tidyData2.txt")
 
 #attaching ActivityName as another column for reading purposes
-data <- merge(data, activityLabels, by.x = "ActivityCode", by.y="ActivityCode") # merging activity map and train map
+#tidyData0 :: first part of the exercise
+tidyData0 <- merge(data, activityLabels, by.x = "ActivityCode", by.y="ActivityCode") # merging activity map and train map
+write.table(tidyData0, "./tidyData1.txt")
